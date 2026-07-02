@@ -6,12 +6,12 @@
 
 Lint API error taxonomies for ambiguous codes and missing retry guidance. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
 
-## Input Contract 48
+## Input Contract
 
 Accepts API error taxonomy. The reader supports plain text, JSON, JSONL, and CSV so the
 tool can fit into scripts, CI jobs, and review exports.
 
-## CLI Walkthrough 48
+## CLI Walkthrough
 
 ```bash
 python -m pip install -e ".[dev]"
@@ -20,7 +20,7 @@ api-error-taxonomy examples/sample.txt --json --fail-on medium
 python -m api_error_taxonomy --help
 ```
 
-## Rule Surface 48
+## Rule Surface
 
 | Rule | Severity | Meaning |
 |---|---:|---|
@@ -28,7 +28,7 @@ python -m api_error_taxonomy --help
 | `unknown-retry` | medium | retry guidance missing |
 | `ambiguous-message` | low | message is ambiguous |
 
-## Validation Notes 48
+## Validation Notes
 
 ```bash
 ruff check .
