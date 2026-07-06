@@ -1,48 +1,47 @@
-# api-error-taxonomy
+<img src="assets/readme-cover.svg" alt="API Error Taxonomy cover" width="100%" />
 
-> Lint API error taxonomies for ambiguous codes and missing retry guidance.
+# API Error Taxonomy
 
-## Workflow Overview
+Lint API error taxonomies for ambiguous codes and missing retry guidance.
 
-Lint API error taxonomies for ambiguous codes and missing retry guidance. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
+![stack](https://img.shields.io/badge/stack-Python-be185d?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-4b5563?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-2563eb?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-16a34a?style=flat-square)
 
-## Input Contract
+## Workflow
 
-Accepts API error taxonomy. The reader supports plain text, JSON, JSONL, and CSV so the
-tool can fit into scripts, CI jobs, and review exports.
+1. Collect the review notes or exported records.
+2. Run `api-error-taxonomy` against the file.
+3. Read the findings in Markdown, or switch to JSON for automation.
+4. Fail CI only at the severity level you care about.
 
-## CLI Walkthrough
+## Checks
+
+| Rule | Severity | What it catches |
+| --- | --- | --- |
+| `unknown-error` | high | unknown error code detected |
+| `unknown-retry` | medium | retry guidance missing |
+| `ambiguous-message` | low | message is ambiguous |
+
+## Command line
 
 ```bash
 python -m pip install -e ".[dev]"
 api-error-taxonomy examples/sample.txt
 api-error-taxonomy examples/sample.txt --json --fail-on medium
-python -m api_error_taxonomy --help
 ```
 
-## Rule Surface
-
-| Rule | Severity | Meaning |
-|---|---:|---|
-| `unknown-error` | high | unknown error code detected |
-| `unknown-retry` | medium | retry guidance missing |
-| `ambiguous-message` | low | message is ambiguous |
-
-## Validation Notes
-
-```bash
-ruff check .
-pytest
-python -m api_error_taxonomy --help
-```
-
-Example risky input:
+## Sample risky input
 
 ```text
 error UNKNOWN retry unknown http 500 message ambiguous
 ```
 
-Architecture: `cli.py` handles arguments, `core.py` reads and evaluates records, and
-`rules.py` keeps the project-specific policy explicit.
+## Project shape
 
-License: MIT.
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
+```
