@@ -1,33 +1,33 @@
 # API Error Taxonomy
 
-Lint API error taxonomies for ambiguous codes and missing retry guidance. This repo keeps the work close to the terminal: clear input, predictable output, and no service to babysit.
+![API Error Taxonomy cover](assets/readme-cover.svg)
 
-## Project card
+Lint API error taxonomies for ambiguous codes and missing retry guidance. It keeps the review small: one input file, a short list of findings, and enough context to fix the line that caused the warning.
 
-<img src="assets/readme-cover.svg" alt="API Error Taxonomy cover" width="100%" />
+## Finding map
 
-| Detail | Value |
-| --- | --- |
-| Area | api contracts |
-| Command | `api-error-taxonomy` |
-| Example | `examples/sample.txt` |
+![Rule flow](assets/readme-diagram.svg)
 
-## What would make me stop a review
+## Review notes
 
-| Stopper | Level | Why it matters |
-| --- | --- | --- |
-| `unknown-error` | high | unknown error code detected |
-| `unknown-retry` | medium | retry guidance missing |
-| `ambiguous-message` | low | message is ambiguous |
+| Signal | Level | What it flags | Fix direction |
+| --- | --- | --- | --- |
+| `unknown-error` | high | unknown error code detected | replace with specific error code |
+| `unknown-retry` | medium | retry guidance missing | document retry behavior |
+| `ambiguous-message` | low | message is ambiguous | make message actionable |
 
-## Run from a fresh clone
+## Fresh clone path
 
 ```bash
 git clone https://github.com/mertefekurt/api-error-taxonomy.git
 cd api-error-taxonomy
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -e ".[dev]"
 api-error-taxonomy examples/sample.txt
-api-error-taxonomy examples/sample.txt --json
+```
+
+## Before the fix
+
+```text
+risky: error UNKNOWN retry unknown http 500 message ambiguous
+clean: error RATE_LIMIT retry after http 429 message clear
 ```
